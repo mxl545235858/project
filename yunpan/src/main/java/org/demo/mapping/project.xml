@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.demo.mappers.IProjectDao">
+  <select id="selectProject" resultType="org.demo.po.Project">
+    SELECT pro.id,pro.projectname,pro.projectinfo FROM acc_pro_re as acc, account as acct, project as pro where acc.acc_id=acct.id and acc.pro_id=pro.id and acct.id=#{id};
+  </select>
+</mapper>
