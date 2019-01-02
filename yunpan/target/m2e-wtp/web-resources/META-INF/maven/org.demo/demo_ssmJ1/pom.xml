@@ -75,7 +75,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <finalName>demo_ssmJ1</finalName>
-  </build>
+
 </project>
