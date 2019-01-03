@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.demo.mappers.PathsDao">
+<select id="selectPaths" resultType="org.demo.po.Paths">
+    SELECT * FROM Paths where uid=#{uid} and path=#{path};
+  </select>
+  <select id="selectPathsById" resultType="org.demo.po.Paths">
+    SELECT * FROM Paths where id=#{id};
+  </select>
+    <insert id="insertPaths" parameterType="org.demo.po.Paths"> 
+insert into Paths (uid,type,name,path,size,location) values(#{uid,jdbcType=INTEGER},#{type},#{name},#{path},#{size},#{location}); 
+</insert>
+<delete id="deletePaths" parameterType="org.demo.po.Paths">
+        delete from Paths where id = #{id}
+    </delete>
+</mapper>

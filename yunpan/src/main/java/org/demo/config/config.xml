@@ -19,6 +19,7 @@
   	
   	<mappers>
   	<mapper resource="org/demo/mapping/user.xml" />
+  	<mapper resource="org/demo/mapping/paths.xml" />
   	</mappers>
   	
 </configuration>

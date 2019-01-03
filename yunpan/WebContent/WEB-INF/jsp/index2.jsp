@@ -9,7 +9,11 @@
     </head>
     <body>
 		        <c:forEach var="o" varStatus="vs" items="${filesName}">
- 				<td><a href="xiazai?fileName=${o}" />${o}<br/></td>
+ 				<td>${o}<br/></td>
                 </c:forEach>
+                
+                
+                
+                
     </body>
 </html>

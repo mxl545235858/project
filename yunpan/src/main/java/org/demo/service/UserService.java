@@ -35,6 +35,21 @@ public class UserService {
         
     }
     
+    public User selectUserByAccount(String account) throws IOException {  
+    	InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+        SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+        SqlSession session = ssf.openSession();
+        try {
+        	
+        	User user = session.selectOne("selectUserByAccount",account);
+        	return user;
+
+        }finally {
+        	session.close();
+        }
+        
+    }
+    
     public String addUser() throws IOException{
     	InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
         SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
