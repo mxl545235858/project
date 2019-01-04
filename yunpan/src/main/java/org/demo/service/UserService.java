@@ -50,14 +50,10 @@ public class UserService {
         
     }
     
-    public String addUser() throws IOException{
+    public String addUser(User user) throws IOException{
     	InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
-        SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
-        
+        SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);       
         SqlSession session = ssf.openSession();
-    	User user = new User();
-        user.setAccount("test");
-        user.setPassword("name");
         session.insert("insertUser",user);
         session.commit();
         session.close();

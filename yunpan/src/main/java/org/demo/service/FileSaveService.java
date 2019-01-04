@@ -6,24 +6,31 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
 @Service
 public class FileSaveService {
 //文件下载
-	public void fileCopy(File file,String outFileName) throws IOException {
+	public void fileCopy(HttpServletResponse response,String location) throws IOException {
 		
 		FileInputStream input = null;
-		FileOutputStream output = null;
+		OutputStream output = null;
 		try {
+			File file = new File(location);
 			input = new FileInputStream(file);
-			output = new FileOutputStream(new File(outFileName+"/"+file.getName()));
-			byte[] buf = new byte[1024];        
-	           int bytesRead;        
-	           while ((bytesRead = input.read(buf)) > 0) {
-	               output.write(buf, 0, bytesRead);
-	           }
+			output = response.getOutputStream();
+
+	         byte buffer[] = new byte[1024];
+	         int len = 0;
+
+	         while((len=input.read(buffer))>0){
+
+	             output.write(buffer, 0, len);
+	         }
             
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

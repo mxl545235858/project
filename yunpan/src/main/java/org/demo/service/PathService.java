@@ -35,6 +35,25 @@ public class PathService {
        }	   
    }
    
+public Paths selectPathsByName(String name, String path) throws IOException{
+	   
+	   InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+       SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+       SqlSession session = ssf.openSession();
+       try {
+    	   Map parmars = new HashMap<>();
+ 
+           parmars.put("name", name);
+           parmars.put("path", path);
+
+       	Paths paths = session.selectOne("selectPathsByName",parmars);
+       	return paths;
+
+       }finally {
+       	session.close();
+       }	   
+   }
+   
 public Paths selectPathById(int id) throws IOException{
 	   
 	   InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
@@ -48,6 +67,23 @@ public Paths selectPathById(int id) throws IOException{
        	session.close();
        }	   
    }
+
+public List<Paths> selectPathByPath(String path) throws IOException{
+	   
+	   InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+    SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+    SqlSession session = ssf.openSession();
+    try {
+    	path="^"+path+"";
+    	System.out.println(path);
+    	List<Paths> list = session.selectList("selectPathsByPath",path);
+    	System.out.println(list.size());
+    	return list;
+
+    }finally {
+    	session.close();
+    }	   
+}
    
    public String insertPath(Paths paths) throws IOException{
       	InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
@@ -68,6 +104,44 @@ public Paths selectPathById(int id) throws IOException{
          session.close();
           return "true";
           }
+   
+   public String deletePathList(List<Integer> idList) throws IOException{
+    	InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+        SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+        SqlSession session = ssf.openSession();
+        session.insert("deletePathsList",idList);
+        session.commit();
+        session.close();
+         return "true";
+         }
+   
+   public String updatePathName(String name,Integer id) throws IOException{
+   	InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+       SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+       SqlSession session = ssf.openSession();
+       
+       Map parmars = new HashMap<>();    
+       parmars.put("name", name);
+       parmars.put("id", id);
+       session.update("updatePathName",parmars);
+       session.commit();
+       session.close();
+        return "true";
+        }
+   public String updatePathLocation(String name,Integer id,String location) throws IOException{
+	   	InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+	       SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+	       SqlSession session = ssf.openSession();
+	       
+	       Map parmars = new HashMap<>();    
+	       parmars.put("name", name);
+	       parmars.put("id", id);
+	       parmars.put("location", location);
+	       session.update("updatePathLocation",parmars);
+	       session.commit();
+	       session.close();
+	        return "true";
+	        }
 
 
 }

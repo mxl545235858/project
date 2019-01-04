@@ -6,13 +6,39 @@
 <select id="selectPaths" resultType="org.demo.po.Paths">
     SELECT * FROM Paths where uid=#{uid} and path=#{path};
   </select>
+  
   <select id="selectPathsById" resultType="org.demo.po.Paths">
     SELECT * FROM Paths where id=#{id};
   </select>
+  
+  <select id="selectPathsByName" resultType="org.demo.po.Paths">
+    SELECT * FROM Paths where name=#{name} and path=#{path};
+  </select>
+  
+  <select id="selectPathsByPath" parameterType="java.lang.String" resultType="org.demo.po.Paths">
+    SELECT * FROM Paths where path REGEXP #{path} ;
+  </select>
+  
     <insert id="insertPaths" parameterType="org.demo.po.Paths"> 
 insert into Paths (uid,type,name,path,size,location) values(#{uid,jdbcType=INTEGER},#{type},#{name},#{path},#{size},#{location}); 
 </insert>
+
+<update id="updatePathName"  parameterType="java.util.HashMap">
+ update Paths SET name=#{name} where id=#{id}
+</update>
+
+<update id="updatePathLocation"  parameterType="java.util.HashMap">
+ update Paths SET name=#{name},location=#{location} where id=#{id}
+</update>
+
+
+
 <delete id="deletePaths" parameterType="org.demo.po.Paths">
-        delete from Paths where id = #{id}
+        delete from Paths where id = #{id};
     </delete>
+    
+    <delete id="deletePathsList"  parameterType = "java.util.List">
+     delete from Paths where id in(<foreach collection="list" item="item" separator=",">#{item}</foreach>);
+</delete>
+
 </mapper>

@@ -8,11 +8,7 @@
 
     </head>
     <body>
-    <form action="get" >
 
-    <input type="submit" value="获取"></input>
-
-    </form >
     <br/>
     
     
@@ -38,7 +34,10 @@
 	<td><a href="getpath?path=${o.path}&id=${o.id}" >${o.name}</a></td>
 	<td>${o.type}</td>
 	<td>${o.size}</td>
-	<td><a>下载</a>  <a>重命名</a> <a href="deletePath?id=${o.id}">删除</a></td>
+	<td><a href="donlowd?location=${o.location}">下载</a>  
+		<a href="deletePath?id=${o.id}">删除</a>
+		<a href="index4?id=${o.id}">重命名</a>
+	</td>
 
 	</tr>
 	

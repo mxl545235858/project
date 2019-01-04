@@ -8,9 +8,12 @@
 
     </head>
     <body>
-		        <c:forEach var="o" varStatus="vs" items="${filesName}">
- 				<td>${o}<br/></td>
-                </c:forEach>
+		           <form action="register" >
+		用户名<input name="account" type="text" value="" /><br/>
+		密码<input name="password" type="text" value="" />
+        <input type="submit" value="注册"></input>
+
+</form>
                 
                 
                 

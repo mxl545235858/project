@@ -8,12 +8,10 @@
 
     </head>
     <body>
-    <form action="login" >
-		<input name="account" type="text" value="" /><br/>
-		<input name="password" type="text" value="" />
-        <input type="submit" value="获取"></input>
+    <form action="rename" >
+		<input name="rename" type="text" value="" /><br/>
+        <input type="submit" value="确定"></input>
 
 </form>
-<a href="index2"  >注册</a>
     </body>
 </html>
