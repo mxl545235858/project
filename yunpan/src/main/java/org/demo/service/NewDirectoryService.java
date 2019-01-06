@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class NewDirectoryService {
 
 	public void NewDirectory(String path,String name) {
-		File file = new File(path+"/"+name);
+		File file = new File(path+name);
 		if(!file.exists()) {
 			file.mkdirs();
 		}

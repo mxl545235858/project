@@ -8,19 +8,24 @@
 
     </head>
     <body>
-
+	<a href="/yunpan/">首页</a><br/>
+	<a href="myfile">我的文件</a>
     <br/>
     
     
     <form id="form"  action="file" encType="multipart/form-data">
-<input type="submit" value="获取"></input>
+<input type="submit" value="上传"></input>
 	<input  type="file" name="file"/></form>
 	<br/>
 	<form id="form"  action="newdir" >
 	<input  type="text" name="dirname"/>
 	<input type="submit" value="新建文件夹"></input>
 	</form>
-
+	<br/>
+	<form id="form"  action="findfile" >
+	<input  type="text" name="filename"/>
+	<input type="submit" value="查找"></input>
+	</form>
 	<br/>
 	
 	<form action="pageup"><input type="submit" value="上一级"></form>
@@ -29,14 +34,28 @@
 	
 	<table border="8">
 	<tr><th>文件名</th><th>类型</th><th>大小</th><th>操作</th></tr>
-	<c:forEach var="o" varStatus="vs" items="${paths}">
+	<c:forEach var="o" varStatus="vs" items="${dirpaths}">
 	<tr>
 	<td><a href="getpath?path=${o.path}&id=${o.id}" >${o.name}</a></td>
 	<td>${o.type}</td>
 	<td>${o.size}</td>
-	<td><a href="donlowd?location=${o.location}">下载</a>  
+	<td>  
 		<a href="deletePath?id=${o.id}">删除</a>
 		<a href="index4?id=${o.id}">重命名</a>
+	</td>
+
+	</tr>
+	
+</c:forEach>
+	<c:forEach var="o" varStatus="vs" items="${otherspaths}">
+	<tr>
+	<td>${o.name}</td>
+	<td>${o.type}</td>
+	<td>${o.size}</td>
+	<td>
+		<a href="deletePath?id=${o.id}">删除</a>
+		<a href="index4?id=${o.id}">重命名</a>
+		<a href="donlowd?location=${o.location}">下载</a>  
 	</td>
 
 	</tr>

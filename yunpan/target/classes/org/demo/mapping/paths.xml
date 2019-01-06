@@ -7,16 +7,37 @@
     SELECT * FROM Paths where uid=#{uid} and path=#{path};
   </select>
   
+      <select id="selectDirPaths" resultType="org.demo.po.Paths">
+    SELECT * FROM Paths where uid=#{uid} and path=#{path} and type='dir';
+  </select>
+  
+    <select id="selectOthersPaths" resultType="org.demo.po.Paths">
+    SELECT * FROM Paths where uid=#{uid} and path=#{path} and type!='dir';
+  </select>
+  
   <select id="selectPathsById" resultType="org.demo.po.Paths">
     SELECT * FROM Paths where id=#{id};
   </select>
   
-  <select id="selectPathsByName" resultType="org.demo.po.Paths">
-    SELECT * FROM Paths where name=#{name} and path=#{path};
+  <select id="selectDirPathsByName" resultType="org.demo.po.Paths">
+    SELECT * FROM Paths where uid=#{uid} and name=#{name} and path=#{path} and type='dir';
   </select>
   
-  <select id="selectPathsByPath" parameterType="java.lang.String" resultType="org.demo.po.Paths">
-    SELECT * FROM Paths where path REGEXP #{path} ;
+    <select id="selectPathsByNameAndType" parameterType="java.util.HashMap" resultType="org.demo.po.Paths">
+    SELECT * FROM Paths where uid=#{uid} and name=#{name} and path=#{path} and type=#{type};
+  </select>
+  
+  <select id="selectPathsByName" resultType="org.demo.po.Paths">
+    SELECT * FROM Paths where uid=#{uid} and name=#{name} and path=#{path};
+  </select>
+  
+  
+    <select id="selectDirPathsLikeName" parameterType="java.util.HashMap" resultType="org.demo.po.Paths">
+    SELECT * FROM Paths where uid=#{uid} and type='dir' and name like #{name};
+  </select>
+  
+      <select id="selectOthersPathsLikeName" parameterType="java.util.HashMap" resultType="org.demo.po.Paths">
+    SELECT * FROM Paths where uid=#{uid} and type!='dir' and name like #{name};
   </select>
   
     <insert id="insertPaths" parameterType="org.demo.po.Paths"> 

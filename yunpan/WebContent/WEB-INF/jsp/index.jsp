@@ -11,7 +11,7 @@
     <form action="login" >
 		<input name="account" type="text" value="" /><br/>
 		<input name="password" type="text" value="" />
-        <input type="submit" value="获取"></input>
+        <input type="submit" value="登录"></input>
 
 </form>
 <a href="index2"  >注册</a>

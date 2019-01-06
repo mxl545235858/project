@@ -1,10 +1,7 @@
 package org.demo.test;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
-
-import org.demo.po.Paths;
-import org.demo.service.PathService;
 
 public class test {
 
@@ -36,11 +33,8 @@ public class test {
 //		
 //		FileSaveService fss = new FileSaveService(p.PathGet()+"File/test/"+filesName.get(0));
 //		fss.FileCopy("F:/gittest");
+		File file =new File("F:/yunpan/file/test/1222/");
+		file.delete();
 		
-		PathService ps = new PathService();
-		List<Paths>list=ps.selectPath(1, "/");
-		for(int i=0;i<list.size();i++ ){
-			System.out.println(list.get(i).getLocation());
-			}
 	}
 }

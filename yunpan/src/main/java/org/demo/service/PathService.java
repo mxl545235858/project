@@ -35,7 +35,7 @@ public class PathService {
        }	   
    }
    
-public Paths selectPathsByName(String name, String path) throws IOException{
+public List<Paths> selectDirPath(int uid, String path) throws IOException{
 	   
 	   InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
        SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
@@ -43,6 +43,44 @@ public Paths selectPathsByName(String name, String path) throws IOException{
        try {
     	   Map parmars = new HashMap<>();
  
+           parmars.put("uid", uid);
+           parmars.put("path", path);
+
+       	List<Paths> list = session.selectList("selectDirPaths",parmars);
+       	return list;
+
+       }finally {
+       	session.close();
+       }	   
+   }
+
+public List<Paths> selectOthersPath(int uid, String path) throws IOException{
+	   
+	   InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+    SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+    SqlSession session = ssf.openSession();
+    try {
+ 	   Map parmars = new HashMap<>();
+
+        parmars.put("uid", uid);
+        parmars.put("path", path);
+
+    	List<Paths> list = session.selectList("selectOthersPaths",parmars);
+    	return list;
+
+    }finally {
+    	session.close();
+    }	   
+}
+   
+public Paths selectPathsByName(Integer uid,String name, String path) throws IOException{
+	   
+	   InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+       SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+       SqlSession session = ssf.openSession();
+       try {
+    	   Map parmars = new HashMap<>();
+    	   parmars.put("uid", uid);
            parmars.put("name", name);
            parmars.put("path", path);
 
@@ -53,6 +91,45 @@ public Paths selectPathsByName(String name, String path) throws IOException{
        	session.close();
        }	   
    }
+
+public Paths selectPathsByNameAndType(Integer uid,String name, String path, String type) throws IOException{
+	   
+	   InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+    SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+    SqlSession session = ssf.openSession();
+    try {
+ 	   Map parmars = new HashMap<>();
+ 	   parmars.put("uid", uid);
+        parmars.put("name", name);
+        parmars.put("path", path);
+        parmars.put("type", type);
+
+    	Paths paths = session.selectOne("selectPathsByNameAndType",parmars);
+    	return paths;
+
+    }finally {
+    	session.close();
+    }	   
+}
+
+public Paths selectDirPathsByName(Integer uid,String name, String path) throws IOException{
+	   
+	   InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+    SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+    SqlSession session = ssf.openSession();
+    try {
+ 	   Map parmars = new HashMap<>();
+ 	   parmars.put("uid", uid);
+        parmars.put("name", name);
+        parmars.put("path", path);
+
+    	Paths paths = session.selectOne("selectDirPathsByName",parmars);
+    	return paths;
+
+    }finally {
+    	session.close();
+    }	   
+}
    
 public Paths selectPathById(int id) throws IOException{
 	   
@@ -68,21 +145,46 @@ public Paths selectPathById(int id) throws IOException{
        }	   
    }
 
-public List<Paths> selectPathByPath(String path) throws IOException{
+
+
+public List<Paths> selectDirPathsLikeName(int uid,String name) throws IOException{
 	   
 	   InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
-    SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
-    SqlSession session = ssf.openSession();
-    try {
-    	path="^"+path+"";
-    	System.out.println(path);
-    	List<Paths> list = session.selectList("selectPathsByPath",path);
-    	System.out.println(list.size());
-    	return list;
+ SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+ SqlSession session = ssf.openSession();
+ try {
+ 	name="%"+name+"%";
+ 	
+ 	 Map parmars = new HashMap<>();
+	  parmars.put("uid", uid);
+      parmars.put("name", name);
+      System.out.println(uid);
+      System.out.println(name);
 
-    }finally {
-    	session.close();
-    }	   
+ 	List<Paths> list = session.selectList("selectDirPathsLikeName",parmars);
+ 	return list;
+
+ }finally {
+ 	session.close();
+ }	   
+}
+
+public List<Paths> selectOthersPathsLikeName(int uid,String name) throws IOException{
+	   
+	   InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+SqlSession session = ssf.openSession();
+try {
+	name="%"+name+"%";
+	 Map parmars = new HashMap<>();
+	   parmars.put("uid", uid);
+    parmars.put("name", name);
+	List<Paths> list = session.selectList("selectOthersPathsLikeName",parmars);
+	return list;
+
+}finally {
+	session.close();
+}	   
 }
    
    public String insertPath(Paths paths) throws IOException{

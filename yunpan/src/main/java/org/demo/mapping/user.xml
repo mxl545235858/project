@@ -10,6 +10,6 @@
     SELECT * FROM User where account=#{account};
   </select>
   <insert id="insertUser" parameterType="org.demo.po.User"> 
-insert into user (account,password) values(#{account},#{password}); 
+insert into user (account,password,filepath) values(#{account},#{password},#{filepath}); 
 </insert>
 </mapper>

@@ -25,10 +25,6 @@ public class UserService {
         try {
         	
         	List<User> list = session.selectList("selectUser");
-        	for(User u : list) {
-        		System.out.println("id:"+u.getId());	
-        	}
-
         }finally {
         	session.close();
         }

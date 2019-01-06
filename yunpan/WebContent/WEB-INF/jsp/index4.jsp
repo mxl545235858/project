@@ -10,7 +10,7 @@
     <body>
     <form action="rename" >
 		<input name="rename" type="text" value="" /><br/>
-        <input type="submit" value="确定"></input>
+        <input type="submit" value="重命名"></input>
 
 </form>
     </body>
