@@ -20,6 +20,9 @@
   	<mappers>
   	<mapper resource="org/demo/mapping/user.xml" />
   	<mapper resource="org/demo/mapping/paths.xml" />
+  	<mapper resource="org/demo/mapping/friend.xml" />
+  	<mapper resource="org/demo/mapping/friendrequest.xml" />
+  	<mapper resource="org/demo/mapping/share.xml" />
   	</mappers>
   	
 </configuration>

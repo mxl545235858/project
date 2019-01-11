@@ -10,18 +10,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.demo.help.GetFileSize;
+import org.demo.po.Friend;
+import org.demo.po.FriendRequest;
 import org.demo.po.Paths;
+import org.demo.po.Share;
 import org.demo.po.User;
 import org.demo.service.FileSaveService;
+import org.demo.service.FriendRequestService;
+import org.demo.service.FriendService;
 import org.demo.service.NewDirectoryService;
 import org.demo.service.PathService;
+import org.demo.service.ShareService;
 import org.demo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.mysql.cj.Session;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class TestController {
@@ -30,7 +35,10 @@ public class TestController {
 	UserService us = new UserService();
 	PathService ps = new PathService();
 	FileSaveService fss = new FileSaveService();
+	FriendService fs = new FriendService();
+	FriendRequestService fqs = new FriendRequestService();
 	NewDirectoryService nds = new NewDirectoryService();
+	ShareService ss = new ShareService();
 	
 	//首页
     @RequestMapping("/")
@@ -49,6 +57,15 @@ public class TestController {
     public String index4(@RequestParam Integer id,HttpSession session){
     	session.setAttribute("renameid", id);
         return "index4";
+    }
+    
+    @RequestMapping("tofindfriend")
+    public String tofindfriend(){
+        return "findfriend";
+    }
+    @RequestMapping("tofriendrequest")
+    public String tofriendrequest(){
+        return "friendrequest";
     }
     
     //我的文件
@@ -120,7 +137,7 @@ public class TestController {
     
     //注册
     @RequestMapping("register")
-    public String register(String account,String password){
+    public String register(String account,String password,String name){
     	try {
     		User newuser=us.selectUserByAccount(account);
     		if(newuser!=null){
@@ -130,6 +147,7 @@ public class TestController {
 			user.setAccount(account);
 			user.setPassword(password);
 			user.setfilepath("F:/yunpan/file/"+account+"/");
+			user.setName(name);
 			us.addUser(user);
 			nds.NewDirectory("F:/yunpan/file/", account);
 		} catch (IOException e) {
@@ -297,7 +315,7 @@ public class TestController {
         return "index3";
     }
     
-    public void filedelete(int uid,Paths path){
+    public void fileDelete(int uid,Paths path){
     	List<Paths> list;
 		try {
 			if(path.getType().equals("dir")){
@@ -305,7 +323,7 @@ public class TestController {
 					if(list.size()>0){
 							for(int i=0;i<list.size();i++){
 								if(list.get(i).getType().equals("dir")){
-									filedelete(uid,list.get(i));
+									fileDelete(uid,list.get(i));
 								}else{
 									File file= new File(list.get(i).getLocation());
 									file.delete();
@@ -346,7 +364,7 @@ public class TestController {
     	try {
     		User user=(User)session.getAttribute("user");
     		Paths path = ps.selectPathById(id);
-    		filedelete(user.getId(),path);
+    		fileDelete(user.getId(),path);
 			List<Paths> dirpaths = ps.selectDirPath(user.getId(), session.getAttribute("path").toString());
 			List<Paths> otherspaths = ps.selectOthersPath(user.getId(),session.getAttribute("path").toString());
 			m.addAttribute("dirpaths", dirpaths);
@@ -416,6 +434,291 @@ public class TestController {
         return "index3";
     }
     
+    //我的好友
+    @RequestMapping("myfriend")
+    public String myFriend(HttpSession session,Model m){
+    	
+		try {
+			User user=(User)session.getAttribute("user");
+			List<Friend> friend = fs.selectFriend(user.getId());
+			m.addAttribute("friend", friend);
+			return "myfriend";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "fail";
+    }
     
+    //删除好友
+    @RequestMapping("removefriend")
+    public String removeFriend(@RequestParam("fid") Integer fid,HttpSession session,Model m){
+    	
+		try {
+			User user=(User)session.getAttribute("user");
+			fs.removeFriend(user.getId(),fid);
+			fs.removeFriend(fid,user.getId());
+			List<Friend> friend = fs.selectFriend(user.getId());
+			m.addAttribute("friend", friend);
+			return "myfriend";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "fail";
+    }
     
+    //查找好友
+    @RequestMapping("findfriend")
+    public String findFriend(String name,HttpSession session,Model m){
+    	
+		try {
+			User user=(User)session.getAttribute("user");
+			List<User> userlist = us.selectUserByNameLike(name,user.getId());
+			m.addAttribute("user", userlist);
+			return "findfriend";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "fail";
+    }
+    
+    //添加好友
+    @ResponseBody
+    @RequestMapping("addfriend")
+    public String addFriend(@RequestParam("id") Integer rqid,HttpSession session){
+    	
+		try {
+			User user=(User)session.getAttribute("user");
+			FriendRequest fq = new FriendRequest();
+			fq.setUid(user.getId());
+			fq.setRqid(rqid);
+			fq.setName(user.getName());
+			fqs.addFriendRequest(fq);
+			return "申请成功";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "fail";
+    }
+    
+  //查找申请
+    @RequestMapping("friendrequest")
+    public String friendRequest(HttpSession session,Model m){
+    	
+		try {
+			User user=(User)session.getAttribute("user");
+			List<FriendRequest> friendrequest =fqs.selectFriendRequest(user.getId());
+			m.addAttribute("friendrequest", friendrequest);
+			return "friendrequest";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "fail";
+    }
+    
+  //同意申请
+    @ResponseBody
+    @RequestMapping("agreefq")
+    public String agreeFriend(@RequestParam("uid") Integer uid,@RequestParam("id") Integer id,HttpSession session){
+    	
+		try {
+			User user=(User)session.getAttribute("user");
+			User user2 = us.selectUser(uid);
+			Friend f = new Friend();
+			f.setUid(user.getId());
+			f.setFid(uid);
+			f.setFname(user2.getName());
+			Friend f2 = new Friend();
+			f2.setUid(user2.getId());
+			f2.setFid(user.getId());
+			f2.setFname(user.getName());
+			fs.insertFriend(f);
+			fs.insertFriend(f2);
+			fqs.deleteFriendRequest(id);
+			return "申请成功";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "fail";
+    }
+    
+  //拒绝申请
+    @ResponseBody
+    @RequestMapping("unagreefq")
+    public String unagreeFriend(@RequestParam("id") Integer id,HttpSession session){
+    	
+		try {
+			fqs.deleteFriendRequest(id);
+			return "申请成功";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "fail";
+    }
+    
+    //文件分享
+    @RequestMapping("share")
+    public String share(@RequestParam("id") Integer id,HttpSession session,Model m){
+    	
+		try {
+			User user=(User)session.getAttribute("user");
+			if(ss.selectShareByUidAndPathsid(user.getId(),id)!=null){
+				return "fail";
+			}
+			Share s = new Share();
+			s.setUid(user.getId());
+			s.setPathsid(id);
+			ss.addShare(s);
+			List<Paths> dirpaths = ps.selectDirPath(user.getId(), session.getAttribute("path").toString());
+			List<Paths> otherspaths = ps.selectOthersPath(user.getId(),session.getAttribute("path").toString());
+			m.addAttribute("dirpaths", dirpaths);
+			m.addAttribute("otherspaths", otherspaths); 
+			return "index3";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "fail";
+    }
+    
+    //我的分享
+    @RequestMapping("myshare")
+    public String myShare(HttpSession session,Model m){
+    	
+		try {
+			User user=(User)session.getAttribute("user");
+			List<Share> sharelist = ss.selectShareByUid(user.getId());
+			List<Integer> id = new ArrayList<Integer>();
+			List<Paths> list = new ArrayList<Paths>();
+			if(sharelist.size()>0){
+				for(int i=0;i<sharelist.size();i++){
+					id.add(sharelist.get(i).getPathsid());
+				}
+				list = ps.selectPathsInId(id);
+			}
+			m.addAttribute("myshare", list);
+			return "myshare";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "fail";
+    }
+    
+    //取消分享
+    @RequestMapping("removeshare")
+    public String removeShare(@RequestParam("pathsid")Integer pathsid,HttpSession session,Model m){
+    	
+		try {
+			User user=(User)session.getAttribute("user");
+			ss.deleteShare(user.getId(),pathsid);
+			List<Share> sharelist = ss.selectShareByUid(user.getId());
+			List<Integer> id = new ArrayList<Integer>();
+			List<Paths> list = new ArrayList<Paths>();
+			if(sharelist.size()>0){
+				for(int i=0;i<sharelist.size();i++){
+					id.add(sharelist.get(i).getPathsid());
+				}
+				list = ps.selectPathsInId(id);
+			}
+			m.addAttribute("myshare", list);
+			return "myshare";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "fail";
+    }
+    
+    //好友分享
+    @RequestMapping("friendshare")
+    public String friendShare(HttpSession session,Model m){
+    	
+		try {
+			User user=(User)session.getAttribute("user");
+			List<Friend> friendlist=fs.selectFriend(user.getId());
+			List<Integer> friendid=new ArrayList<>();
+			List<Integer> friendsharepathsid=new ArrayList<>();
+			List<Share> friendshare=new ArrayList<>();
+			List<Object[]> list=new ArrayList<>();
+
+			for(int i=0;i<friendlist.size();i++){
+				friendid.add(friendlist.get(i).getFid());
+			}		
+			if(friendid.size()>0){
+				friendshare=ss.selectShareInUid(friendid);
+				for(int i=0;i<friendshare.size();i++){
+					friendsharepathsid.add(friendshare.get(i).getPathsid());
+				}
+				if(friendsharepathsid.size()>0){
+					List<Paths> pathslist=ps.selectPathsInId(friendsharepathsid);
+					for(int i=0;i<pathslist.size();i++){
+						Object[] o=new Object[3];
+						o[0]=pathslist.get(i).getName();
+						o[1]=us.selectUser(pathslist.get(i).getUid()).getName();
+						o[2]=pathslist.get(i).getLocation();
+						list.add(o);
+					}
+				}
+			}
+			m.addAttribute("friendshare", list);
+			return "friendshare";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "fail";
+    }
+    //下载好友分享
+    @RequestMapping("donlowdfriendshare")
+    public String donlowdFriendShare(@RequestParam("location")String location,HttpServletResponse response,HttpSession session,Model m){
+    	
+    	try {
+    		User user = (User)session.getAttribute("user");
+    		response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(location, "UTF-8"));	
+    		fss.fileCopy(response,location);
+    		
+    		
+			List<Friend> friendlist=fs.selectFriend(user.getId());
+			List<Integer> friendid=new ArrayList<>();
+			List<Integer> friendsharepathsid=new ArrayList<>();
+			List<Share> friendshare=new ArrayList<>();
+			List<Object[]> list=new ArrayList<>();
+
+			for(int i=0;i<friendlist.size();i++){
+				friendid.add(friendlist.get(i).getFid());
+			}
+			
+			friendshare=ss.selectShareInUid(friendid);
+
+			
+			for(int i=0;i<friendshare.size();i++){
+				friendsharepathsid.add(friendshare.get(i).getPathsid());
+			}			
+			List<Paths> pathslist=ps.selectPathsInId(friendsharepathsid);
+
+			for(int i=0;i<pathslist.size();i++){
+				Object[] o=new Object[3];
+				o[0]=pathslist.get(i).getName();
+				o[1]=us.selectUser(pathslist.get(i).getUid()).getName();
+				o[2]=pathslist.get(i).getLocation();
+				list.add(o);
+			}
+			m.addAttribute("friendshare", list);
+			return "friendshare";
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+        return "fail";
+    }
 }

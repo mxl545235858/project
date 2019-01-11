@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+.tupian{
+	background-image: url("../../resources/imgs/cuowu.png");
+	position:relative;left:15%;
+	width: 1200px;
+	height: 800px;
+}

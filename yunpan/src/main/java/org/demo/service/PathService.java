@@ -186,6 +186,23 @@ try {
 	session.close();
 }	   
 }
+
+public List<Paths> selectPathsInId(List<Integer> id) throws IOException{
+	   
+	   InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+SqlSession session = ssf.openSession();
+try {
+
+	 Map parmars = new HashMap<>();
+	 parmars.put("id", id);
+	List<Paths> list = session.selectList("selectPathsInId",parmars);
+	return list;
+
+}finally {
+	session.close();
+}	   
+}
    
    public String insertPath(Paths paths) throws IOException{
       	InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");

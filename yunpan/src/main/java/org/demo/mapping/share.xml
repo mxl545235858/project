@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.demo.mappers.ShareDao">
+
+<select id="selectShareByUid" resultType="org.demo.po.Share">
+    SELECT * FROM Share where uid=#{uid};
+  </select>
+  <select id="selectShareByUidAndPathsid" resultType="org.demo.po.Share">
+    SELECT * FROM Share where uid=#{uid} and pathsid=#{pathsid};
+  </select>
+  <select id="selectShareInUid" parameterType="java.util.List" resultType="org.demo.po.Share">
+    SELECT * FROM Share where uid in (<foreach collection="uid" item="item" separator=",">#{item}</foreach>);
+  </select>
+
+    <insert id="insertShare"  parameterType="org.demo.po.Share"> 
+insert into Share (uid,pathsid) values(#{uid,jdbcType=INTEGER},#{pathsid}); 
+</insert>
+
+<delete id="deleteShare" parameterType="org.demo.po.Share">
+        delete from Share where uid = #{uid} and pathsid=#{pathsid};
+    </delete>
+
+</mapper>

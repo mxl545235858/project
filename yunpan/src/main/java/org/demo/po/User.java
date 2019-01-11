@@ -7,6 +7,7 @@ public class User implements Serializable{
 	private String account;
 	private String password;
 	private String filepath;
+	private String name;
 	
 	public int getId() {
 		return id;
@@ -31,6 +32,12 @@ public class User implements Serializable{
 	}
 	public void setfilepath(String filepath) {
 		this.filepath = filepath;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

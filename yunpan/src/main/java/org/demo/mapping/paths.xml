@@ -40,6 +40,10 @@
     SELECT * FROM Paths where uid=#{uid} and type!='dir' and name like #{name};
   </select>
   
+        <select id="selectPathsInId" parameterType="java.util.List" resultType="org.demo.po.Paths">
+    SELECT * FROM Paths where id in (<foreach collection="id" item="item" separator=",">#{item}</foreach>) ;
+  </select>
+
     <insert id="insertPaths" parameterType="org.demo.po.Paths"> 
 insert into Paths (uid,type,name,path,size,location) values(#{uid,jdbcType=INTEGER},#{type},#{name},#{path},#{size},#{location}); 
 </insert>

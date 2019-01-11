@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.demo.mappers.FriendDao">
+<select id="selectFriend" resultType="org.demo.po.Friend">
+    SELECT * FROM Friend where uid=#{uid};
+  </select>
+
+    <insert id="insertFriend" parameterType="org.demo.po.Friend"> 
+insert into Friend (uid,fid,fname) values(#{uid,jdbcType=INTEGER},#{fid},#{fname}); 
+</insert>
+
+<delete id="removefriend" parameterType="java.util.HashMap">
+        delete from Friend where uid=#{uid} and fid=#{fid} ;
+    </delete>
+
+</mapper>
