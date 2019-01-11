@@ -8,13 +8,17 @@
     
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="resources/css/shouye.css" />
+         <!--<link rel="stylesheet" href="resources/css/bootstrap.min.css" />  -->
+                <script src="resources/js/jquery-3.3.1.min.js"></script>
+        
+        <script src="resources/js/bootstrap.min.js"></script>
         
         <title>JSP Page</title>
 
     </head>
     <body>
     <div class="header">
-        <div style="position: relative;top:25%;left: 50px;font-size: 25px; "><a style="color: white;">青大云</a></div>
+        <div style="position: relative;top:25%;left: 50px;font-size: 25px;font-family: sans-serif;font-weight: bold; "><a style="color: white;">青大云盘</a></div>
         <div style="position: relative;left: 50px"><img src="resources/imgs/yunpan.jpg" style="position:relative;top: 5px;" width="80px" height="50px"/></div>
         <div style="position: relative;top:20px;left: 200px;font-size: 20px; "><a style="color: white;">主页</a></div>
                 <div style="position: relative;top:20px;left: 250px;font-size: 20px; "><a style="color: white;">网盘</a></div>
@@ -22,7 +26,7 @@
                                 <div style="position: relative;top:20px;left: 350px;font-size: 20px; "><a style="color: white;">空间</a></div>
 
 
-        <div style="position: relative;left:70%;top: 30px;text-align: center"><a href="/yunpan/" style="color: white;">登录</a></div>
+        <div style="position: relative;left:70%;top: 30px;text-align: center"><a href="/yunpan/" style="color: white;text-decoration: none;font-family: sans-serif;font-weight: bold;">退出</a></div>
     </div>
 	
 	<div class="left" style="border: 1px darkgray solid;">
@@ -30,18 +34,18 @@
     <div  style="width: 200px;height: 50px;text-align: center"><img src="resources/imgs/quanbuwenjian.png" style="position:relative;top: 10px" width="30px" height="30px"/>
         <a id="a1" style="font-weight: bold;">全部文件</a>
     </div>
-    <div style="width: 200px;height: 50px;text-align: center"><img src="tupian.png"style="position:relative;top: 10px" width="30px" height="30px"/>
+    <div style="width: 200px;height: 50px;text-align: center"><img src="resources/imgs/wodehaoyou.png"style="position:relative;top: 10px" width="30px" height="30px"/>
     <a id="a2">我的好友</a>
     </div>
-    <div style="width: 200px;height: 50px;text-align: center"><img src="shipin.png"style="position:relative;top: 10px"width="30px" height="30px" />
+    <div style="width: 200px;height: 50px;text-align: center"><img src="resources/imgs/haoyouqingqiu.png"style="position:relative;top: 10px"width="30px" height="30px" />
         <a id="a3">好友请求</a>
     </div>
-    <div style="width: 200px;height: 50px;text-align: center"><img src="wendang.png"style="position:relative;top: 10px" width="30px" height="30px"/>
+    <div style="width: 200px;height: 50px;text-align: center"><img src="resources/imgs/wodefenxiang.png"style="position:relative;top: 10px" width="30px" height="30px"/>
         <a id="a4">我的分享</a></div>
-    <div style="width: 200px;height: 50px;text-align: center"><img src="yinyue.png" style="position:relative;top: 10px"width="30px" height="30px"/>
+    <div style="width: 200px;height: 50px;text-align: center"><img src="resources/imgs/haoyoufenxiang.png" style="position:relative;top: 10px"width="30px" height="30px"/>
         <a id="a5">好友分享</a>
     </div>
-      <div style="width: 200px;height: 50px;text-align: center"><img src="hushouzhan.png"style="position:relative;top: 10px" width="30px" height="30px"/>
+      <div style="width: 200px;height: 50px;text-align: center"><img src="resources/imgs/hushouzhan.png"style="position:relative;top: 10px" width="30px" height="30px"/>
         <a id="a6" style="font-weight: bold;">回收站&nbsp;&nbsp;&nbsp;&nbsp;</a>
         
     </div>
@@ -80,7 +84,7 @@
         <div style="position: relative;left: 80%;top:10px;"><a style="color: dimgray">全部加载，共10个</a></div>
     </div>
         <div id="show" class="view">
-        <table border="8">
+        <table border="8" style="height: 100%;width: 100%">
 	<tr><th>文件名</th><th>类型</th><th>大小</th><th>操作</th></tr>
 	<c:forEach var="o" varStatus="vs" items="${dirpaths}">
 	<tr>
@@ -156,7 +160,8 @@
 
            $(document).ready(function(){
   $("#a1").click(function(){
-    $('#show').load('myfile.jsp');
+	　　window.location.href="myfile";
+
   });
 });
 $(document).ready(function(){
@@ -166,12 +171,12 @@ $(document).ready(function(){
 });
 $(document).ready(function(){
   $("#a3").click(function(){
-    $('#show').load('shipin.html');
+    $('#show').load('http://localhost:8080/yunpan/friendrequest');
   });
 });
 $(document).ready(function(){
   $("#a4").click(function(){
-    $('#show').load('wendang.html');
+    $('#show').load('http://localhost:8080/yunpan/myfriend');
   });
 });
 $(document).ready(function(){
