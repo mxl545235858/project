@@ -4,15 +4,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="resources/js/shubiao.js"></script>
+        
         <title>JSP Page</title>
 
     </head>
     <body>
-    <a href="/yunpan/">首页</a><br/><a href="myfile">我的文件</a><br/>
-
-	<br/>
-
-	<table border="8">
+    
+	<table id="table" >
 	<tr><th>文件名</th><th>好友用户名</th><th>操作</th></tr>
 	<c:forEach var="o" varStatus="vs" items="${friendshare}">
 	<tr>

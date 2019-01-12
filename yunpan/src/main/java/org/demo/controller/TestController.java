@@ -95,9 +95,9 @@ public class TestController {
     	
 		try {
 			User user=(User)session.getAttribute("user");
+			System.out.println(filename);
 			List<Paths> dirpaths = ps.selectDirPathsLikeName(user.getId(),filename);
 			List<Paths> otherspaths = ps.selectOthersPathsLikeName(user.getId(),filename);
-			System.out.println(dirpaths.size());
 			m.addAttribute("dirpaths", dirpaths);
 			m.addAttribute("otherspaths", otherspaths);
 			return "index5";
@@ -146,10 +146,10 @@ public class TestController {
 			User user=new User();
 			user.setAccount(account);
 			user.setPassword(password);
-			user.setfilepath("F:/yunpan/file/"+account+"/");
+			user.setfilepath("D:/yunpan/file/"+account+"/");
 			user.setName(name);
 			us.addUser(user);
-			nds.NewDirectory("F:/yunpan/file/", account);
+			nds.NewDirectory("D:/yunpan/file/", account);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -469,11 +469,13 @@ public class TestController {
     }
     
     //查找好友
+    
     @RequestMapping("findfriend")
     public String findFriend(String name,HttpSession session,Model m){
     	
 		try {
 			User user=(User)session.getAttribute("user");
+			System.out.println(name);
 			List<User> userlist = us.selectUserByNameLike(name,user.getId());
 			m.addAttribute("user", userlist);
 			return "findfriend";
@@ -538,6 +540,7 @@ public class TestController {
 			f2.setFname(user.getName());
 			fs.insertFriend(f);
 			fs.insertFriend(f2);
+			System.out.println(id);
 			fqs.deleteFriendRequest(id);
 			return "申请成功";
 		} catch (IOException e) {
@@ -553,6 +556,7 @@ public class TestController {
     public String unagreeFriend(@RequestParam("id") Integer id,HttpSession session){
     	
 		try {
+			System.out.println(id);
 			fqs.deleteFriendRequest(id);
 			return "申请成功";
 		} catch (IOException e) {
@@ -592,6 +596,7 @@ public class TestController {
     public String myShare(HttpSession session,Model m){
     	
 		try {
+			System.out.println("hgg");
 			User user=(User)session.getAttribute("user");
 			List<Share> sharelist = ss.selectShareByUid(user.getId());
 			List<Integer> id = new ArrayList<Integer>();

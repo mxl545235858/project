@@ -8,10 +8,15 @@
 
     </head>
     <body>
+      <div style="text-align: center;position: relative;top: 6%">
+    
     <form action="rename" >
-		<input name="rename" type="text" value="" /><br/>
-        <input type="submit" value="重命名"></input>
+		<input  style="height: 30px;width: 300px;border: 2px solid;color: lightgrey;border-radius: 4px" name="rename" type="text" value="" placeholder="请输入您要更改的名字" required="required" onkeyup="this.value=this.value.replace(/\s+/g,'')"/>
+        <input type="submit"  style="height: 30px;width: 70px;"value="重命名"></input>
+    
+        
 
 </form>
+    </div>
     </body>
 </html>

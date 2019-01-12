@@ -1,0 +1,106 @@
+@CHARSET "UTF-8";
+*{
+    margin:0;
+    padding:0;
+    
+}
+.header{
+    
+	width: 100%;
+	height: 62px;
+	background-color: black;
+	
+	
+}
+.header div{
+     float: left;
+}
+.left{
+    float: left;
+    height: 700px;
+    width: 200px;
+    background-color:whitesmoke;
+
+
+}
+.left div
+{
+     transition-duration: 0.4s;
+}
+.left div:hover
+{
+    background-color:lightgrey;
+}
+.right{
+     float: left;
+    
+
+     width:1318px;
+     height: 650px;
+
+}
+.navigation{
+    height: 50px;
+        background-color:whitesmoke;
+
+    
+}
+.navigation div{
+   display: inline; 
+}
+.view{
+    background-color: darkgray;
+     width: 100%;
+     height: 500px;
+}
+
+.search input {
+    text-align: center;
+    border: 2px solid lightgrey;
+    border-radius: 5px;
+    background: transparent;
+        }
+.search button {
+    background-color: darkgray;
+    border-radius: 0 5px 5px 0;
+    right: 0;
+    top:22%;
+        }
+.search button:before {
+    content: "搜索";
+    font-size: 13px;
+    color: white;
+        }
+
+.search form {
+    padding-top: 3%;
+    display: block;
+    position: relative;
+    width: 300px;
+    margin: 0 auto;
+        }
+.search  button{
+    display: block;
+    border: none;
+    outline: none;
+        }
+
+.search input {
+    width: 100%;
+    height: 35px;
+        }
+
+.search button {
+    height: 35px;
+    width: 35px;
+    cursor: pointer;
+    position: absolute;
+        }
+        .top{
+            height: 40px;
+            width: 100%;
+            background-color: white;
+        }
+        .top div{
+            display: inline;
+        }

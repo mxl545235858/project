@@ -42,7 +42,7 @@
                if(panduan.value.length<4){
                alert("账号少于4位，请重新设置！");
                panduan.value="";
-               panduan.focus();
+               
                return false;
                }
                }

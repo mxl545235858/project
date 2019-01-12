@@ -4,15 +4,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="resources/js/shubiao.js"></script>
+        <script src="resources/js/jquery-3.3.1.min.js"></script>
+        
+        
         <title>JSP Page</title>
 
     </head>
     <body>
-    <a href="/yunpan/">首页</a><br/><a href="myfile">我的文件</a><br/>
-
-	<br/>
-
-	<table border="8">
+    
+	<table id="table1">
 	<tr><th>我的分享</th><th>操作</th></tr>
 	<c:forEach var="o" varStatus="vs" items="${myshare}">
 	<tr>
@@ -26,5 +27,31 @@
 	
 </c:forEach>
 </table>
+<script type="text/javascript">
+        window.onload = function showTable() {
+
+			var tablename = document.getElementById("table1");
+
+			var oRows = tablename.getElementsByTagName("tr");
+
+			for (var i = 0; i < oRows.length; i++) {
+
+				oRows[i].onmouseover = function() {
+
+					this.style.backgroundColor = "whitesmoke";
+
+				}
+
+				oRows[i].onmouseout = function() {
+
+					this.style.backgroundColor = "white";
+
+				}
+
+			}
+
+		}
+
+        </script>
     </body>
 </html>

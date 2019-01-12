@@ -5,22 +5,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+<link rel="stylesheet" href="resources/css/form.css" />
 
     </head>
     <body>
-	<a href="/yunpan/">首页</a><br/>
-	<a href="myfile">我的文件</a>
+	<!--  <a href="/yunpan/">首页</a><br/>
+<a href="myfile">我的文件</a>
     <br/>
     
     
 
-	<form id="form"  action="findfile" >
-	<input  type="text" name="filename"/>
+<form id="form"  action="findfile" >
+<input  type="text" name="filename"/>
 	<input type="submit" value="查找"></input>
 	</form>
-	<br/>
+	<br/>-->
 	
-	<table border="8">
+	<table>
 	<tr><th>文件名</th><th>类型</th><th>大小</th><th>操作</th></tr>
 	<c:forEach var="o" varStatus="vs" items="${dirpaths}">
 	<tr>
