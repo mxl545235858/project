@@ -2,7 +2,9 @@ package org.demo.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -22,6 +24,23 @@ public class FriendRequestService {
 	        try {
 	        	
 	        	List<FriendRequest> list  = session.selectList("selectFriendRequest",rqid);
+	        	return list;
+
+	        }finally {
+	        	session.close();
+	        }
+	        
+	    }
+	 
+	 public List<FriendRequest> selectFriendRequestLive(int uid,int rqid) throws IOException {  
+	    	InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+	        SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+	        SqlSession session = ssf.openSession();
+	        try {
+	            Map parmars = new HashMap<>();    
+	            parmars.put("uid", uid);
+	            parmars.put("rqid", rqid);
+	        	List<FriendRequest> list  = session.selectList("selectFriendRequestLive",parmars);
 	        	return list;
 
 	        }finally {

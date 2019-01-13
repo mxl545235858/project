@@ -88,5 +88,15 @@ public class ShareService {
           return "true";
           }
     
+    public String deleteShareList(List<Integer> idList) throws IOException{
+    	InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+        SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+        SqlSession session = ssf.openSession();
+        session.insert("deleteShareList",idList);
+        session.commit();
+        session.close();
+         return "true";
+         }
+    
 	
 }

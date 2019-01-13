@@ -158,8 +158,6 @@ public List<Paths> selectDirPathsLikeName(int uid,String name) throws IOExceptio
  	 Map parmars = new HashMap<>();
 	  parmars.put("uid", uid);
       parmars.put("name", name);
-      System.out.println(uid);
-      System.out.println(name);
 
  	List<Paths> list = session.selectList("selectDirPathsLikeName",parmars);
  	return list;

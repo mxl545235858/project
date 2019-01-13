@@ -6,7 +6,9 @@
 <select id="selectFriend" resultType="org.demo.po.Friend">
     SELECT * FROM Friend where uid=#{uid};
   </select>
-
+<select id="selectFriendLive" resultType="org.demo.po.Friend">
+    SELECT * FROM Friend where uid=#{uid} and fid=#{fid};
+  </select>
     <insert id="insertFriend" parameterType="org.demo.po.Friend"> 
 insert into Friend (uid,fid,fname) values(#{uid,jdbcType=INTEGER},#{fid},#{fname}); 
 </insert>

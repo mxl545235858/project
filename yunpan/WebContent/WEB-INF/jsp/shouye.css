@@ -35,7 +35,7 @@
      float: left;
     
 
-     width:85%;
+     width:1318px;
      height: 650px;
 
 }
@@ -49,7 +49,7 @@
    display: inline; 
 }
 .view{
-    background-color: white;
+    background-color: darkgray;
      width: 100%;
      height: 500px;
 }

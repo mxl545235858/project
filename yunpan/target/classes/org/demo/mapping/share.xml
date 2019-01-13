@@ -21,5 +21,8 @@ insert into Share (uid,pathsid) values(#{uid,jdbcType=INTEGER},#{pathsid});
 <delete id="deleteShare" parameterType="org.demo.po.Share">
         delete from Share where uid = #{uid} and pathsid=#{pathsid};
     </delete>
+        <delete id="deleteShareList"  parameterType = "java.util.List">
+     delete from Share where pathsid in(<foreach collection="list" item="item" separator=",">#{item}</foreach>);
+</delete>
 
 </mapper>

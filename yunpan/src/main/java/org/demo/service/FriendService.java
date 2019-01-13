@@ -31,6 +31,23 @@ public class FriendService {
         
     }
     
+    public List<Friend> selectFriendLive(int uid,int fid) throws IOException {  
+    	InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
+        SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);
+        SqlSession session = ssf.openSession();
+        try {
+            Map parmars = new HashMap<>();    
+            parmars.put("uid", uid);
+            parmars.put("fid", fid);
+        	List<Friend> list  = session.selectList("selectFriendLive",parmars);
+        	return list;
+
+        }finally {
+        	session.close();
+        }
+        
+    }
+    
     public String insertFriend(Friend f) throws IOException{
     	InputStream is = Resources.getResourceAsStream("org/demo/config/config.xml");
         SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(is);       

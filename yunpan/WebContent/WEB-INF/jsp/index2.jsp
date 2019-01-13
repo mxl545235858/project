@@ -5,7 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
          <link rel="stylesheet" href="resources/css/zhuce.css" />
-        
+        <script src="resources/js/jquery-3.3.1.min.js"></script>
         <title>JSP Page</title>
 <style>
 
@@ -24,38 +24,59 @@
     </div>
     <div class="main">
     <br/><br/>
-		           <form action="register" >
-		<a style="font-family: sans-serif;font-weight: bolder;font-size: 18px;color:#808080;">用户名</a><input style="height: 35px;width: 270px;border: 1px solid silver;border-radius:5px;
-    font-size: 14px;position: relative;left: 3%"  name="name" type="text" value="" placeholder="请设置用户名" required="required" /><br/><br/>
+		           <form>
+		<a style="font-family: sans-serif;font-weight: bolder;font-size: 18px;color:#808080;">用户名</a><input id="name" style="height: 35px;width: 270px;border: 1px solid silver;border-radius:5px;
+    font-size: 14px;position: relative;left: 3%"  name="name" type="text" value="" placeholder="请设置用户名" onkeyup="this.value=this.value.replace(/\s+/g,'')" required="required" /><br/><br/>
 		<a style="font-family: sans-serif;font-weight: bolder;font-size: 18px;color:#808080;">&nbsp;&nbsp;&nbsp;账号</a><input style="height: 35px;width: 270px;border: 1px solid silver;border-radius:5px;
     font-size: 14px;position: relative;left: 3%"  name="account" type="text" value="" placeholder="请设置账号，长度为4-16位字符" required="required" onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="16" id="panduan" onblur="return check1();"/><br/><br/>
 		<a style="font-family: sans-serif;font-weight: bolder;font-size: 18px;color:#808080;">&nbsp;&nbsp;&nbsp;密码</a><input style="height: 35px;width: 270px;border: 1px solid silver;border-radius:5px;
-    font-size: 14px;position: relative;left: 3%"  name="password" type="text" value="" placeholder="请设置密码，长度为4-16位字符" required="required" onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="16" id="panduan1"/><br/><br/><br/>
-        <input class="denglu1 denglu" type="submit" value="注册" onclick="return check2();"></input>
-
+    font-size: 14px;position: relative;left: 3%"  name="password" type="password" value="" placeholder="请设置密码，长度为4-16位字符" required="required" onkeyup="this.value=this.value.replace(/\s+/g,'')" maxlength="16" id="panduan1" onblur="return check2();"/><br/><br/><br/>
+        <input id="regist" class="denglu1 denglu" type="button" value="注册" ></input><br>
 </form>
+
        </div>         
                <script type="text/javascript">
 
-               function check1(){
-               var panduan=document.getElementById('panduan');
-               if(panduan.value.length<4){
-               alert("账号少于4位，请重新设置！");
-               panduan.value="";
-               panduan.focus();
-               return false;
-               }
-               }
-               function check2(){
-                   var panduan1=document.getElementById('panduan1');
+
+               $("#regist").click(function() {     
+            	   
+            	   var name=document.getElementById('name');
+                   if(name.value.length<1){
+                   alert("请填写用户名！");
+                   panduan.value="";
+                   
+                   return false;
+                   }
+            	   var panduan=document.getElementById('panduan');
+                   if(panduan.value.length<4){
+                   alert("账号少于4位，请重新设置！");
+                   panduan.value="";
+                   
+                   return false;
+                   }
+            	   var panduan1=document.getElementById('panduan1');
                    if(panduan1.value.length<4){
                    alert("密码少于4位，请重新设置！");
                    panduan1.value="";
-                   panduan1.focus();
                    return false;
                    }
-                   }
+       			$.ajax({
+       				url : "register",
+       				type: 'POST',
+       				data: {"name": $("#name").val(),"account": $("#panduan").val(),"password": $("#panduan1").val()},
+       				success : function(msg) {
+       					if(msg=="1"){
+       						alert("注册成功");
+       					window.location.href = "/yunpan/";
+       					}else{
+       						alert("用户已存在");
+       					}
+       				},
+       				error : function() {
 
+       				}
+       			});
+       		});
                
                </script> 
                 

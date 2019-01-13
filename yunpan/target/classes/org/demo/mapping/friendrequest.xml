@@ -6,6 +6,9 @@
 <select id="selectFriendRequest" resultType="org.demo.po.FriendRequest">
     SELECT * FROM FriendRequest where rqid=#{rqid};
   </select>
+  <select id="selectFriendRequestLive" resultType="org.demo.po.Friend">
+    SELECT * FROM FriendRequest where uid=#{uid} and rqid=#{rqid};
+  </select>
 
     <insert id="insertFriendRequest" parameterType="org.demo.po.FriendRequest"> 
 insert into FriendRequest (uid,rqid,name) values(#{uid,jdbcType=INTEGER},#{rqid},#{name}); 

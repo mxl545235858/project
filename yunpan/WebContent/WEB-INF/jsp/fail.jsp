@@ -3,12 +3,15 @@
 <!DOCTYPE html>
 <html>
     <head>
+             <link rel="stylesheet" href="resources/css/cuowu.css" />
+    
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
 
     </head>
     <body>
-		错误<br />
-			<a href="/yunpan/">首页</a>
+	<div class="tupian" >
+				<a style="position: relative;left: 43%;top: 56%;text-decoration: none;" href="/yunpan/">>>返回首页</a>
+	</div>
     </body>
 </html>
